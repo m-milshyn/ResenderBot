@@ -6,7 +6,7 @@ import time
 # Не забудьте подставить свой токен!
 token = '5693586989:AAHO24PzcB6IKQSDNuSncS9T3CX5_x3HTBE'
 bot = telebot.TeleBot(token)
-TO_CHAT_ID =  593209016
+TO_CHAT_ID =   334372042
 
 def telegram_bot():
     @bot.message_handler(commands=['start'])
