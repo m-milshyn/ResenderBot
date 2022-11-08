@@ -8,6 +8,7 @@ token = '5693586989:AAHO24PzcB6IKQSDNuSncS9T3CX5_x3HTBE'
 bot = telebot.TeleBot(token)
 TO_CHAT_ID =   334372042
 
+
 def telegram_bot():
     @bot.message_handler(commands=['start'])
     def send_welcome(message: types.Message):
@@ -18,18 +19,30 @@ def telegram_bot():
         bot.send_message(message.chat.id, "Привіт ✌️ ",  reply_markup=markup)
 
     def reply_to_meme(message):
-        bot.send_message(TO_CHAT_ID, '#КонкурсМеми')
-        bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
-        bot.send_message(message.chat.id, 'Ваша заявка прийнята на учать у конкурсі🫶🏼')
+        if ((message.text != 'Конкурси') and (message.text != 'Меми') and (message.text != 'Історія одного фото') and (
+                message.text != 'Головне меню') and (message.text != 'Задай питання профкому')):
+            bot.send_message(TO_CHAT_ID, '#КонкурсМеми')
+            bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
+            bot.send_message(message.chat.id, 'Ваша заявка прийнята🫶🏼\n'
+                                              'Хай щастить 💓')
+        else:
+            func(message)
     def reply_to_foto(message):
-        bot.send_message(TO_CHAT_ID, '#КонкурсІсторіяОдногоФото')
-        bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
-        bot.send_message(message.chat.id, 'Ваша заявка прийнята на учать у конкурсі🫶🏼')
+        if ((message.text != 'Конкурси') and (message.text != 'Меми') and (message.text != 'Історія одного фото') and (
+                message.text != 'Головне меню') and (message.text != 'Задай питання профкому')):
+            bot.send_message(TO_CHAT_ID, '#КонкурсІсторіяОдногоФото')
+            bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
+            bot.send_message(message.chat.id, 'Ваша заявка прийнята🫶🏼\n'
+                                              'Хай щастить 💓')
+        else:
+            func(message)
     def reply_to_question(message):
-        bot.send_message(TO_CHAT_ID, '#ПитанняПрофкому')
-        bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
-        bot.send_message(message.chat.id, 'Дякуємо за ваше питання')
-        bot.forward_media_group()
+        if ((message.text != 'Конкурси') and (message.text != 'Меми') and (message.text != 'Історія одного фото') and (message.text != 'Головне меню') and (message.text != 'Задай питання профкому')):
+            bot.send_message(TO_CHAT_ID, '#ПитанняПрофкому')
+            bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
+            bot.send_message(message.chat.id, 'Дякуємо за ваше питання')
+        else:
+            func(message)
 
     @bot.message_handler(content_types=['text', "audio", "document", "photo", "sticker", "video", "video_note", "voice", "location", "contact",
                  "new_chat_members", "left_chat_member", "new_chat_title", "new_chat_photo", "delete_chat_photo",
@@ -44,15 +57,15 @@ def telegram_bot():
             markup.add(btn1, btn2, btn3)
             bot.send_message(message.chat.id, 'Вибери який конкурс тебе цікавить: ', reply_markup=markup)
         elif (message.text == 'Меми'):
-            message = bot.send_message(message.chat.id, 'Зо треба зробити для участі в цьому конкурсі:\n'
-                                              '1. Зробити мем у фото чи відео (тік ток) форматі і відправити у цей бот.\n\n'
-                                              '❗️Зверніть увагу❗️Неможна:\n'
+            message = bot.send_message(message.chat.id, 'Що треба зробити для участі в цьому конкурсі:\n'
+                                              '1. Зробити мем у фото чи відео (тік ток) форматі.\n\n'
+                                              '❗️Зверніть увагу❗️Не можна:\n'
                                               '- жартувати про викладачів і працівників закладу;\n'
                                               '- ображати чи принижувати будь-кого;\n'
-                                              '- нецензурно висловлюватися (без матів!);\n'
-                                              '- використовувати у відео/ жартувати на тему алкоголю, тютюнових чи наркотичних засобів;\n'
+                                              '- нецензурно висловлюватися;\n'
+                                              '- використовувати у відео/ жартувати на тему алкоголю, тютюнових чи наркотичних виробів;\n'
                                               '- піднімати політичні питання, що сприяють розпалюванню конфліктів.\n\n'
-                                              '2. Надіслати відео у бот ХАІ (за посиланням у шапці профілю) і ОБОВ’ЯЗКОВО написати:\n'
+                                              '2. Надіслати відео/фото у бот ХАІ (за посиланням у шапці профілю) і ОБОВ’ЯЗКОВО написати:\n'
                                               '- ПІБ учасника;\n'
                                               '- Ваш факультет;\n'
                                               '- нік в інстаграмі.')
