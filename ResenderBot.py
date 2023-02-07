@@ -23,7 +23,7 @@ def telegram_bot():
         if(message.text != 'СТОП'):
             bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
             bot.register_next_step_handler(message, forward_messsage)
-        elif(event_name == 'Новорічнийчелендж'):
+        elif(event_name == 'valentineDay'):
             valentineDay(message)
         elif(event_name == 'ПитанняПрофкому'):
             question(message)
@@ -68,7 +68,7 @@ def telegram_bot():
             btn1 = types.KeyboardButton('Валентинки')
             btn2 = types.KeyboardButton('Головне меню')
             markup.add(btn1, btn2)
-            bot.send_message(message.chat.id, "Конкурси, що тривають:\n    1. Новорічний челендж", reply_markup=markup)
+            bot.send_message(message.chat.id, "Конкурси, що тривають:\n    1. Валентинки", reply_markup=markup)
         elif (message.text == 'Головне меню') or (message.text == 'СТОП'):
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             item1 = types.KeyboardButton('Конкурси')
