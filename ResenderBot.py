@@ -23,20 +23,20 @@ def telegram_bot():
         if(message.text != 'СТОП'):
             bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
             bot.register_next_step_handler(message, forward_messsage)
-        elif(event_name == 'valentineDay'):
-            valentineDay(message)
+        elif(event_name == 'Фотоконкурсдо8березня'):
+            march_8(message)
         elif(event_name == 'ПитанняПрофкому'):
             question(message)
 
-    def valentineDay(message):
+    def march_8(message):
         global event_name
         if ((message.text != 'Конкурси')
                 and (message.text != 'Головне меню')
                 and (message.text != 'Задай питання профкому')
-                and (message.text != 'Валентинки')
+                and (message.text != 'Фотоконкурс до 8 березня')
                 and (message.text != 'СТОП')):
-            bot.send_message(TO_CHAT_ID, '#valentineDay')
-            event_name = 'valentineDay'
+            bot.send_message(TO_CHAT_ID, '#Фотоконкурсдо8березня')
+            event_name = 'Фотоконкурсдо8березня'
             bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
             bot.register_next_step_handler(message, forward_messsage)
         else:
@@ -48,7 +48,7 @@ def telegram_bot():
         if ((message.text != 'Конкурси')
                 and (message.text != 'Головне меню')
                 and (message.text != 'Задай питання профкому')
-                and (message.text != 'Валентинки')
+                and (message.text != 'Фотоконкурс до 8 березня')
                 and (message.text != 'СТОП')):
             bot.send_message(TO_CHAT_ID, '#ПитанняПрофкому')
             event_name = 'ПитанняПрофкому'
@@ -65,10 +65,10 @@ def telegram_bot():
     def func(message):
         if message.text == 'Конкурси':
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            btn1 = types.KeyboardButton('Валентинки')
+            btn1 = types.KeyboardButton('Фотоконкурс до 8 березня')
             btn2 = types.KeyboardButton('Головне меню')
             markup.add(btn1, btn2)
-            bot.send_message(message.chat.id, "Конкурси, що тривають:\n    1. Валентинки", reply_markup=markup)
+            bot.send_message(message.chat.id, "Конкурси, що тривають:\n    1. Фотоконкурс до 8 березня", reply_markup=markup)
         elif (message.text == 'Головне меню') or (message.text == 'СТОП'):
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             item1 = types.KeyboardButton('Конкурси')
@@ -84,25 +84,23 @@ def telegram_bot():
             bot.send_message(message.chat.id, 'Щоб завершити подачу заявки натисніть на кнопку "СТОП"',
                              reply_markup=markup)
             bot.register_next_step_handler(message, question)
-        elif (message.text == 'Валентинки'):
-            bot.send_message(message.chat.id, "❗️ВАЖЛИВО❗️\n"
-                                              "Необхідно надіслати свою валентинку у бот ХАІ (посилання у шапці профілю) або в дірект нашого інстаграму і ОБОВ’ЯЗКОВО написати:\n"
-                                              "- ПІБ учасника;\n"
-                                              "- факультет;\n"
-                                              "- нік в інстаграмі.\n\n"
-                                              "Будь ласка будьте уважні, цього НЕ можна робити👇\n"
-                                              "- ображати чи принижувати будь-кого (керівництво і викладачів університету також);\n"
-                                              "- нецензурно і грубо висловлюватися;\n"
-                                              "- торкатися теми алкоголю, сигарет чи наркотичних виробів;\n"
-                                              "- без надмірної хіті\n\n"
-                                              "Конкурс триватиме з 08.02.2023 до 13.02.2023 (20.00).\n\n"
+        elif (message.text == 'Фотоконкурс до 8 березня'):
+            bot.send_message(message.chat.id, "❗ATTENTION❗\n"
+                                              "Необхідно надіслати свою історію у бот Профкому студентів "
+                                              "ХАІ  або в дірект нашого інстаграму і ОБОВ’ЯЗКОВО написати:\n"
+                                              "✅ПІБ учасника;\n"
+                                              "✅факультет;\n"
+                                              "✅нік в інстаграмі.\n\n"
+                                              "Конкурс триватиме з 08.03.2023 до 15.03.2023 (20.00).\n\n"
                                               "Переможця оберуть студенти в сторіс у інстаграмі @profcomkhai\n"
-                                              "❗️14.02.2023 з 8.00 до 20.00❗️")
+                                              "❗16.03.2023 з 8.00 до 20.00.❗")
+            bot.send_message(message.chat.id, "Якщо ви хочете відправити більше 1 фото, то будь-ласка, відправляйте їх по одному. "
+                                              "Групи фотографій прийматися не будуть!")
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             btn = types.KeyboardButton('СТОП')
             markup.add(btn)
             bot.send_message(message.chat.id, 'Щоб завершити подачу заявки натисніть на кнопку "СТОП"', reply_markup=markup)
-            bot.register_next_step_handler(message, valentineDay)
+            bot.register_next_step_handler(message, march_8)
     bot.polling(none_stop=True)
 
 def main():
