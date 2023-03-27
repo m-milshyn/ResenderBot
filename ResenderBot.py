@@ -301,7 +301,7 @@ def telegram_bot():
                                               "Instagram: [@7fac_khai](https://instagram.com/7fac_khai?igshid=YmMyMTA2M2Y=)\n"
                                               "Telegram: [7fac_khai](https://t.me/fac7_khai)\n\n"
                                               "🌍Факультет міжнародних комунікацій та підготовки іноземних громадян\n"
-                                              "Instagram: [@faculty_8_khai_](https://instagram.com/faculty_8_khai_?igshid=YmMyMTA2M2Y=)"
+                                              "Instagram: [@faculty_8_khai_](https://instagram.com/faculty_8_khai_?igshid=YmMyMTA2M2Y=)\n"
                                               "Telegram: [8th Faculty at KhAI](https://t.me/thebestatKhAI)",
                              parse_mode="Markdown")
             bot.register_next_step_handler(message, social_and_dekanat)
