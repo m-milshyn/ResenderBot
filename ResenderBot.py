@@ -6,6 +6,7 @@ bot = telebot.TeleBot(token)
 TO_CHAT_ID = -1001848377879
 dev_chat_id = 1436890435
 event_name = ""
+check_num = False
 
 
 def telegram_bot():
@@ -17,6 +18,9 @@ def telegram_bot():
                    types.KeyboardButton("Реквізити"),
                    types.KeyboardButton("Задай питання профкому"),
                    types.KeyboardButton("Повідомити про технічну помилку"),
+                   types.KeyboardButton("Пропозиції та скарги"),
+                   types.KeyboardButton("Зв’язок з деканатом та соціальні мережі"),
+                   types.KeyboardButton("Питання/відповідь"),
                    types.KeyboardButton("Профбюро студентів та департаменти ППОС НАУ \"ХАІ\""))
         chat_message = "Головне меню:\n" \
                        "1. Конкурси\n" \
@@ -24,7 +28,10 @@ def telegram_bot():
                        "3. Реквізити\n" \
                        "4. Задай питання профкому\n" \
                        "5. Повідомити про технічну помилку\n" \
-                       '6. Профбюро студентів та департаменти ППОС НАУ "ХАІ"'
+                       "6. Пропозиції та скарги\n" \
+                       "7. Зв’язок з деканатом та соціальні мережі\n" \
+                       "8. Питання/відповідь\n" \
+                       "9. Профбюро студентів та департаменти ППОС НАУ \"ХАІ\""
         bot.send_message(message.chat.id, "Привіт хайовцю, тебе вітає Профспілка студентів ХАІ ✌️ ")
         bot.send_message(message.chat.id, chat_message, reply_markup=markup)
 
@@ -396,7 +403,8 @@ def telegram_bot():
             markup.add(btn1, btn2)
             bot.send_message(message.chat.id,
                              "Конкурси, що тривають, або будуть проходити незабаром:\n    "
-                             "1. Міс ХАІ: етап факультет - незабаром",
+                             "1. Міс ХАІ: етап факультет - активний\n"
+                             "2. Міс ХАІ: етап всеуніверситетський - в розробці",
                              reply_markup=markup)
         elif message.text == "Головне меню":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -524,15 +532,10 @@ def telegram_bot():
             bot.register_next_step_handler(message, question)
         elif message.text == "Міс ХАІ: етап факультет":
             check_num = False
-            chat_message = "❗ATTENTION❗\n " \
-                           "Конкурс знаходиться в розробці. Чекайте анонс на нашій сторінці інстаграму [@profcomkhai](https://www.instagram.com/profcomkhai/)"
+            chat_message = "Всім привіт! Подачу заявок на участь у конкурсі запущено\n" \
+                           "Для того щоб зареєструватися Вам потрібно [подати заявку за допомогою гугл форми](https://docs.google.com/forms/d/e/1FAIpQLScu-Jq07SaCeEgbcpdtJUrrIsPW1QAmNZqc-Uh-5IwN5kRRgg/viewform)\n" \
+                           "Ознайомитися быльш детально з цим заходу модна на нашый сторінці інстаграму [@profcomkhai](https://www.instagram.com/profcomkhai/)"
             bot.send_message(message.chat.id, chat_message, parse_mode="Markdown")
-            # markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            # btn = types.KeyboardButton("СТОП")
-            # markup.add(btn)
-            # bot.send_message(message.chat.id, "Щоб завершити подачу заявки натисніть на кнопку \"СТОП\"",
-            #                reply_markup=markup)
-            # bot.register_next_step_handler(message, missKHAI)
 
     bot.polling(none_stop=True)
 
