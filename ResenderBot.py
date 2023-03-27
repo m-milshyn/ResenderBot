@@ -514,7 +514,7 @@ def telegram_bot():
                        types.KeyboardButton("Головне меню"))
             bot.send_message(message.chat.id, "Оберіть які саме реквізити Вам потрібні:", reply_markup=markup)
             bot.register_next_step_handler(message, req_)
-        elif message.text == "Задай питання профкому":
+        elif message.text == "Запитай Профком студентів ХАІ":
             check_num = False
             bot.send_message(message.chat.id, "Напишіть своє питання та обов'язково в кінці "
                                               "залиште свої контактні дані(ПІБ, номер групи, номер телефону, telegram або instagram)")
