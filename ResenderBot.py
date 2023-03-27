@@ -468,13 +468,11 @@ def telegram_bot():
             bot.register_next_step_handler(message, social_and_dekanat)
         elif message.text == "Повідомити про технічну помилку":
             check_num = False
-            bot.send_message(message.chat.id, "Шановні хайовці!"
-                                              "Якщо ви помітили, що сайт Профкому студентів ХАІ чи система для дистанційного навчання “Ментор” "
-                                              "працює некоректно, то прохання повідомити нам.\n\n"
-                                              "Щоб це зробити надайте будь-ласка таку інформацію:\n"
-                                              "1. ПІБ, номер групи;\n"
-                                              "2. Де саме на сайті ви помітили помилку;\n"
-                                              "3. Надайте розгорнутий опис проблеми, яку ви помітили.")
+            bot.send_message(message.chat.id, "Хайовцю, напиши свою пропозицію чи скаргу та обов'язково в кінці залиште свої контактні дані для отримання зворотного зв’язку:\n"
+                                              "1. ПІБ\n"
+                                              "2. Номер групи\n"
+                                              "3. Номер телефону\n"
+                                              "4. Telegram або Instagram\n")
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             btn = types.KeyboardButton("СТОП")
             markup.add(btn)
