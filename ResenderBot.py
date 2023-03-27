@@ -16,7 +16,7 @@ def telegram_bot():
         markup.add(types.KeyboardButton("Конкурси"),
                    types.KeyboardButton("Положення"),
                    types.KeyboardButton("Реквізити"),
-                   types.KeyboardButton("Задай питання профкому"),
+                   types.KeyboardButton("Запитай Профком студентів ХАІ"),
                    types.KeyboardButton("Повідомити про технічну помилку"),
                    types.KeyboardButton("Пропозиції та скарги"),
                    types.KeyboardButton("Зв’язок з деканатом та соціальні мережі"),
@@ -30,7 +30,7 @@ def telegram_bot():
     def check(message):
         if ((message.text != "Конкурси")
                 and (message.text != "Головне меню")
-                and (message.text != "Задай питання профкому")
+                and (message.text != "Запитай Профком студентів ХАІ")
                 and (message.text != "Міс ХАІ: етап факультет")
                 and (message.text != "Повідомити про технічну помилку")
                 and (message.text != "Зв’язок та соціальні мережі")
@@ -407,7 +407,7 @@ def telegram_bot():
             markup.add(types.KeyboardButton("Конкурси"),
                        types.KeyboardButton("Положення"),
                        types.KeyboardButton("Реквізити"),
-                       types.KeyboardButton("Задай питання профкому"),
+                       types.KeyboardButton("Запитай Профком студентів ХАІ"),
                        types.KeyboardButton("Повідомити про технічну помилку"),
                        types.KeyboardButton("Пропозиції та скарги"),
                        types.KeyboardButton("Зв’язок з деканатом та соціальні мережі"),
@@ -417,7 +417,7 @@ def telegram_bot():
                            "1. Конкурси\n" \
                            "2. Положення\n" \
                            "3. Реквізити\n" \
-                           "4. Задай питання профкому\n" \
+                           "4. Запитай Профком студентів ХАІ\n" \
                            "5. Повідомити про технічну помилку\n" \
                            "6. Пропозиції та скарги\n" \
                            "7. Зв’язок з деканатом та соціальні мережі\n" \
@@ -466,10 +466,10 @@ def telegram_bot():
             check_num = False
             bot.send_message(message.chat.id,
                              "Хайовцю, напиши свою пропозицію чи скаргу та обов'язково в кінці залиште свої контактні дані для отримання зворотного зв’язку:\n"
-                             "ПІБ\n"
-                             "Номер групи\n"
-                             "Номер телефону\n"
-                             "Telegram або Instagram\n")
+                             "1. ПІБ\n"
+                             "2. Номер групи\n"
+                             "3. Номер телефону\n"
+                             "4. Telegram або Instagram\n")
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             btn = types.KeyboardButton("СТОП")
             markup.add(btn)
