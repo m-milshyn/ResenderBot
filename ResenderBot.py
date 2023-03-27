@@ -402,9 +402,9 @@ def telegram_bot():
             btn2 = types.KeyboardButton("Головне меню")
             markup.add(btn1, btn2)
             bot.send_message(message.chat.id,
-                             "Конкурси, що тривають, або будуть проходити незабаром:\n    "
-                             "1. Міс ХАІ: етап факультет - активний\n"
-                             "2. Міс ХАІ: етап всеуніверситетський - в розробці",
+                             "Конкурси, що тривають, або будуть проходити незабаром:\n"
+                             "    1. Міс ХАІ: етап факультет - активний\n"
+                             "    2. Міс ХАІ: етап всеуніверситетський - в розробці",
                              reply_markup=markup)
         elif message.text == "Головне меню":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -534,7 +534,7 @@ def telegram_bot():
             check_num = False
             chat_message = "Всім привіт! Подачу заявок на участь у конкурсі запущено\n" \
                            "Для того щоб зареєструватися Вам потрібно [подати заявку за допомогою гугл форми](https://docs.google.com/forms/d/e/1FAIpQLScu-Jq07SaCeEgbcpdtJUrrIsPW1QAmNZqc-Uh-5IwN5kRRgg/viewform)\n" \
-                           "Ознайомитися быльш детально з цим заходу модна на нашый сторінці інстаграму [@profcomkhai](https://www.instagram.com/profcomkhai/)"
+                           "Ознайомитися більш детально з цим заходом можна на нашій сторінці інстаграму [@profcomkhai](https://www.instagram.com/profcomkhai/)"
             bot.send_message(message.chat.id, chat_message, parse_mode="Markdown")
 
     bot.polling(none_stop=True)
