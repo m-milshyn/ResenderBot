@@ -1,11 +1,11 @@
 import telebot
 from telebot import types
+from datetime import datetime
 
 token = '5693586989:AAHO24PzcB6IKQSDNuSncS9T3CX5_x3HTBE'
 bot = telebot.TeleBot(token)
 TO_CHAT_ID = -1001848377879
 dev_chat_id = 1436890435
-event_name = ""
 check_num = False
 
 
@@ -35,6 +35,7 @@ def telegram_bot():
                 and (message.text != "Повідомити про технічну помилку")
                 and (message.text != "Зв’язок та соціальні мережі")
                 and (message.text != "Пропозиції Та Скарги")
+                and (message.text != "Моменти з ХАІ")
                 and (message.text != "Профбюро студентів та департаменти ППОС НАУ \"ХАІ\"")
                 and (message.text != "СТОП")):
             return True
@@ -230,11 +231,9 @@ def telegram_bot():
 
     def question(message):
         global check_num
-        global event_name
         if check(message):
             if not check_num:
                 bot.send_message(TO_CHAT_ID, "#ПитанняПрофкому")
-                event_name = "ПитанняПрофкому"
                 check_num = True
             bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
             bot.register_next_step_handler(message, question)
@@ -244,11 +243,9 @@ def telegram_bot():
 
     def problem_report(message):
         global check_num
-        global event_name
         if check(message):
             if not check_num:
                 bot.send_message(dev_chat_id, "#ПовідомитиПроПомилку")
-                event_name = "ПовідомитиПроПомилку"
                 check_num = True
             bot.forward_message(dev_chat_id, message.chat.id, message.message_id)
             bot.register_next_step_handler(message, problem_report)
@@ -257,17 +254,70 @@ def telegram_bot():
             func(message)
 
     def suggestions(message):
-        global event_name
         global check_num
         if check(message):
             if not check_num:
                 bot.send_message(TO_CHAT_ID, "#ПропозиціїТаСкарги")
-                event_name = "Пропозиції Та Скарги"
                 check_num = True
             bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
             bot.register_next_step_handler(message, suggestions)
         elif message.text == "СТОП":
             message.text = "Головне меню"
+            func(message)
+
+    def contest_playlist(message):
+        global check_num
+        if check(message):
+            if not check_num:
+                bot.send_message(TO_CHAT_ID, "#ПлейлистХайовця")
+                check_num = True
+            bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
+            bot.register_next_step_handler(message, contest_playlist)
+        elif message.text == "СТОП":
+            message.text = "Головне меню"
+            func(message)
+
+    def checkContest_playlist(message):
+        current_datetime = datetime.now()
+        if message.text == "Подати заявку":
+            if 18 <= current_datetime.day <= 25 and current_datetime.month == 4:
+                markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+                btn = types.KeyboardButton("СТОП")
+                markup.add(btn)
+                bot.send_message(message.chat.id, "Щоб завершити подачу заявки натисніть на кнопку \"СТОП\"",
+                                 reply_markup=markup)
+                bot.register_next_step_handler(message, contest_playlist)
+            else:
+                bot.send_message(message.chat.id, "‼️Подачу заявок ще не розпочато.\n"
+                                                  "Прийом пісень буде з 18.04.2023 до 25.04.2023 включно")
+        elif message.text == "Головне меню":
+            func(message)
+
+    def contest_moment(message):
+        global check_num
+        if check(message):
+            if not check_num:
+                bot.send_message(TO_CHAT_ID, "#Моменти_з_ХАІ")
+                check_num = True
+            bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
+            bot.register_next_step_handler(message, contest_moment)
+        elif message.text == "СТОП":
+            message.text = "Головне меню"
+            func(message)
+
+    def checkContest_moment(message):
+        current_datetime = datetime.now()
+        if message.text == "Подати заявку":
+            if 10 <= current_datetime.day <= 17 and current_datetime.month == 4:
+                markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+                btn = types.KeyboardButton("СТОП")
+                markup.add(btn)
+                bot.send_message(message.chat.id, "Щоб завершити подачу заявки натисніть на кнопку \"СТОП\"", reply_markup=markup)
+                bot.register_next_step_handler(message, contest_moment)
+            else:
+                bot.send_message(message.chat.id, "‼️Подачу заявок ще не розпочато.\n"
+                                                  "Прийом відео буде з 10.04.2023 до 17.04.2023 включно")
+        elif message.text == "Головне меню":
             func(message)
 
     def social_and_dekanat(message):
@@ -393,15 +443,47 @@ def telegram_bot():
     def func(message):
         global check_num
         if message.text == "Конкурси":
-            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            btn1 = types.KeyboardButton("Міс ХАІ: етап факультет")
-            btn2 = types.KeyboardButton("Головне меню")
-            markup.add(btn1, btn2)
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            btn2 = types.KeyboardButton("Моменти з ХАІ")
+            btn3 = types.KeyboardButton("Плей-лист хайовця")
+            btn4 = types.KeyboardButton("Головне меню")
+            markup.add(btn2, btn3, btn4)
             bot.send_message(message.chat.id,
                              "Конкурси, що тривають, або будуть проходити незабаром:\n"
                              "    1. Міс ХАІ: етап факультет - активний\n"
-                             "    2. Міс ХАІ: етап всеуніверситетський - в розробці",
+                             "    2. Моменти з ХАІ - незабаром\n"
+                             "    3. Плей-лист хайовця - незабаром\n"
+                             "    4. Міс ХАІ: етап всеуніверситетський - в розробці",
                              reply_markup=markup)
+        elif message.text == "Плей-лист хайовця":
+            check_num = False
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            markup.add(types.KeyboardButton("Подати заявку"),
+                       types.KeyboardButton("Головне меню"))
+            chat_message = "Привіт, хайовець!😊\n\n" \
+                           "Пам'ятаєш, як раніше було круто танцювати на наших святах з друзями? Погодься, цього " \
+                           "дуже не вистачає, тому, Профком студентів ХАІ вирішив підготувати до дня ХАІ плей-лист " \
+                           "з усіма піснями, які асоціюються у тебе з нашими хайовськими святами. " \
+                           "Тож, не зволікай! Скоріше пиши назву однієї або навіть більше пісень, які асоціюються " \
+                           "у тебе з життям ХАІ!❤️\n\n" \
+                           "‼️Прийом пісень буде з 18.04.2023 до 25.04.2023\n\n" \
+                           "Дякуємо тобі за твої пісні та нехай щастить!🤗"
+            bot.send_message(message.chat.id, chat_message, parse_mode="Markdown", reply_markup=markup)
+            bot.register_next_step_handler(message, checkContest_playlist)
+        elif message.text == "Моменти з ХАІ":
+            check_num = False
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            markup.add(types.KeyboardButton("Подати заявку"),
+                       types.KeyboardButton("Головне меню"))
+            chat_message = "Щасливі моменти з життя, які вже минули назавжди залишаться у наших спогадах. 📝✨💫\n\n" \
+                           "Отож, любі хайовці, Профком студентів ХАІ хоче підготувати для вас відео з найкращими моментами пов'язаними " \
+                           "з нашим університетом, щоб згадати як весело було на очному навчанні та як відпочивали студенти. Показати першокурсникам, " \
+                           "що ХАІ — це не тільки рутинне навчання.\n\n" \
+                           "Ви спитаєте \"Коли?\" - до дня ХАІ.\n\n" \
+                           "Тож, відправляйте свої найцікавіші відео з ХАІ у бот Профкому студентів ХАІ у розділ «Конкурси», але пам'ятайте, що відео має бути в межах цензури.\n\n" \
+                           "‼️Прийом відео буде з 10.04.2023 до 17.04.2023"
+            bot.send_message(message.chat.id, chat_message, parse_mode="Markdown", reply_markup=markup)
+            bot.register_next_step_handler(message, checkContest_moment)
         elif message.text == "Головне меню":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
             markup.add(types.KeyboardButton("Конкурси"),
@@ -527,15 +609,6 @@ def telegram_bot():
             bot.send_message(message.chat.id, "Щоб завершити подачу заявки натисніть на кнопку \"СТОП\"",
                              reply_markup=markup)
             bot.register_next_step_handler(message, question)
-        elif message.text == "Міс ХАІ: етап факультет":
-            check_num = False
-            chat_message = "🎀 Наші любі дівчатка! 🎀\n\n" \
-                           "Профком студентів ХАІ має крутецьку новину для вас.🤪\n\n" \
-                           "Сьогодні ми розпочинаємо пошуки нашої \"Міс ХАІ 2023\" 🤯" \
-                           "Проходити ця масштабна подія буде в два тури. Спочатку обирається міс кожного факультету, а потім дівчата боряться за звання головної дівчини - \"Міс ХАІ 2023\"🏆\n\n" \
-                           "[Реєстрація триває до 30.03.2023 до 12.00](https://docs.google.com/forms/d/e/1FAIpQLScu-Jq07SaCeEgbcpdtJUrrIsPW1QAmNZqc-Uh-5IwN5kRRgg/viewform)\n" \
-                           "Тож не зволікай, реєструйся та вривайся в двіж разом з нами 👑"
-            bot.send_message(message.chat.id, chat_message, parse_mode="Markdown")
 
     bot.polling(none_stop=True)
 
