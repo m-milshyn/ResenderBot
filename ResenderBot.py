@@ -279,7 +279,7 @@ def telegram_bot():
 
     def checkContest_memoir(message):
         current_datetime = datetime.now()
-        if message.text == "Старт":
+        if message.text == "Відправити історію":
             if 15 <= current_datetime.day <= 20 and current_datetime.month == 5:
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
                 btn = types.KeyboardButton("СТОП")
@@ -439,7 +439,7 @@ def telegram_bot():
         elif message.text == "Хайовські мемуари":
             check_num = False
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-            markup.add(types.KeyboardButton("Старт"),
+            markup.add(types.KeyboardButton("Відправити історію"),
                        types.KeyboardButton("Головне меню"))
             chat_message = "Спогади - це вічні скарби серця✨💖\n\n" \
                            "Всім нам подобається студенське життя саме за його насиченість емоціями та всілякими різноманітними ситуаціями." \
