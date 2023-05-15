@@ -265,28 +265,28 @@ def telegram_bot():
             message.text = "Головне меню"
             func(message)
 
-    def contest_playlist(message):
+    def contest_memoir(message):
         global check_num
         if check(message):
             if not check_num:
-                bot.send_message(TO_CHAT_ID, "#ПлейлистХайовця")
+                bot.send_message(TO_CHAT_ID, "#ХайовськіМемуари")
                 check_num = True
             bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
-            bot.register_next_step_handler(message, contest_playlist)
+            bot.register_next_step_handler(message, contest_memoir)
         elif message.text == "СТОП":
             message.text = "Головне меню"
             func(message)
 
     def checkContest_memoir(message):
         current_datetime = datetime.now()
-        if message.text == "Подати заявку":
+        if message.text == "Старт":
             if 15 <= current_datetime.day <= 20 and current_datetime.month == 5:
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
                 btn = types.KeyboardButton("СТОП")
                 markup.add(btn)
                 bot.send_message(message.chat.id, "Щоб завершити подачу заявки натисніть на кнопку \"СТОП\"",
                                  reply_markup=markup)
-                bot.register_next_step_handler(message, contest_playlist)
+                bot.register_next_step_handler(message, contest_memoir)
             else:
                 bot.send_message(message.chat.id, "‼️Подачу заявок припинено.\n"
                                                   "Прийом пісень був з 15.05.2023 до 20.05.2023 включно")
@@ -439,12 +439,12 @@ def telegram_bot():
         elif message.text == "Хайовські мемуари":
             check_num = False
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-            markup.add(types.KeyboardButton("Подати заявку"),
+            markup.add(types.KeyboardButton("Старт"),
                        types.KeyboardButton("Головне меню"))
             chat_message = "Спогади - це вічні скарби серця✨💖\n\n" \
                            "Всім нам подобається студенське життя саме за його насиченість емоціями та всілякими різноманітними ситуаціями." \
                            "Не соромся поділитись своїми успіхами та невдачами, радощами та розчаруваннями. Можливо, " \
-                           "саме твоя історія надихне когось іншого на нові досягнення та перемоги." \
+                           "саме твоя історія надихне когось іншого на нові досягнення та перемоги. " \
                            "Що б ви не розповідали, ми завжди будемо раді чути вашу історію та поділитися нею з іншими, " \
                            "тому натискай на кнопку Старт» та починай писати.☺️\n" \
                            "Всі публікації будуть анонімними.\n\n" \
