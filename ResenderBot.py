@@ -280,7 +280,7 @@ def telegram_bot():
     def checkContest_memoir(message):
         current_datetime = datetime.now()
         if message.text == "Відправити історію":
-            if 15 <= current_datetime.day <= 20 and current_datetime.month == 5:
+            if 15 <= current_datetime.day <= 24 and current_datetime.month == 5:
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
                 btn = types.KeyboardButton("СТОП")
                 markup.add(btn)
@@ -289,7 +289,7 @@ def telegram_bot():
                 bot.register_next_step_handler(message, contest_memoir)
             else:
                 bot.send_message(message.chat.id, "‼️Подачу заявок припинено.\n"
-                                                  "Прийом пісень був з 15.05.2023 до 20.05.2023 включно")
+                                                  "Прийом пісень був з 15.05.2023 до 24.05.2023 включно")
         elif message.text == "Головне меню":
             func(message)
 
@@ -448,7 +448,7 @@ def telegram_bot():
                            "Що б ви не розповідали, ми завжди будемо раді чути вашу історію та поділитися нею з іншими, " \
                            "тому натискай на кнопку «Відправити історію» та починай писати.☺️\n" \
                            "Всі публікації будуть анонімними.\n\n" \
-                           "‼️Прийом буде з 15.05.2023 до 20.05.2023‼️\n\n" \
+                           "‼️Прийом буде з 15.05.2023 до 24.05.2023‼️\n\n" \
                            "Дякуємо тобі за твої Спогади та нехай щастить!🤗"
             bot.send_message(message.chat.id, chat_message, parse_mode="Markdown", reply_markup=markup)
             bot.register_next_step_handler(message, checkContest_memoir)
