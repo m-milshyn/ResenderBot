@@ -249,7 +249,7 @@ def telegram_bot():
             bot.send_message(message.chat.id, chat_message, reply_markup=markup)
         elif message.text == "Конкурси":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-            localsheets = sheetContest.get_all_records()
+            localsheets = sh.worksheet("Contest").get_all_records()
             buttons_group = []
             current_datetime = datetime.now()
             message_text = f"Конкурси, що тривають, або будуть проходити незабаром:\n\n"
