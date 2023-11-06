@@ -6,13 +6,6 @@ from datetime import datetime
 
 sa = gspread.service_account(filename="gentle-bot-389616-bcfea1c7d626.json")
 sh = sa.open("BOT sheets data")
-sheetDekanat = sh.worksheet("DekanatContact")
-sheetDepart = sh.worksheet("Profcom faculty&department")
-sheetSocial = sh.worksheet("Social")
-sheetContest = sh.worksheet("Contest")
-sheetDoc = sh.worksheet("Regulatory documents")
-sheetRequisites = sh.worksheet("Requisites")
-sheetFAQ = sh.worksheet("FAQ")
 token = '5693586989:AAHO24PzcB6IKQSDNuSncS9T3CX5_x3HTBE'
 bot = telebot.TeleBot(token)
 TO_CHAT_ID = -1001848377879
@@ -102,7 +95,7 @@ def telegram_bot():
     def social_and_dekanat(message):
         global localsheets
         if message.text == "Соціальні мережі ППОС НАУ \"ХАІ\"":
-            localsheets = sheetSocial.get_all_records()
+            localsheets = sh.worksheet("Social").get_all_records()
             bot.send_message(message.chat.id, "Почекайте, оновлюємо інформацію")
             for localsheet in localsheets:
                 textMessage = localsheet["Факультет"] + ":\n"
@@ -119,7 +112,7 @@ def telegram_bot():
             bot.register_next_step_handler(message, social_and_dekanat)
         elif message.text == "Зв’язок з деканатами":
             bot.send_message(message.chat.id, "Почекайте, оновлюємо інформацію")
-            localsheets = sheetDekanat.get_all_records()
+            localsheets = sh.worksheet("DekanatContact").get_all_records()
             for localsheet in localsheets:
                 textMessage = f'{localsheet["Факультет"]} \n\nКонтакти:\n{localsheet["Контакти"]}\n\nЧас роботи:\n{localsheet["Час роботи"]}'
                 bot.send_message(message.chat.id, textMessage)
@@ -285,7 +278,7 @@ def telegram_bot():
             bot.register_next_step_handler(message, contest_func)
         elif message.text == "Профбюро студентів та департаменти ППОС НАУ \"ХАІ\"":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-            localsheets = sheetDepart.get_all_records()
+            localsheets = sh.worksheet("Profcom faculty&department").get_all_records()
             buttons_group = []
             for localsheet in localsheets:
                 button = types.KeyboardButton(localsheet.get("Назва підрозділу"))
@@ -301,7 +294,7 @@ def telegram_bot():
             bot.register_next_step_handler(message, faculty_profcom)
         elif message.text == "Питання/відповідь":
             check_num = False
-            localsheets = sheetFAQ.get_all_records()
+            localsheets = sh.worksheet("FAQ").get_all_records()
             i = 1
             buttons_group = []
             message_text = f""
@@ -364,7 +357,7 @@ def telegram_bot():
                              reply_markup=markup)
             bot.register_next_step_handler(message, question)
         elif message.text == "Положення":
-            localsheets = sheetDoc.get_all_records()
+            localsheets = sh.worksheet("Regulatory documents").get_all_records()
             bot.send_message(message.chat.id, "Почекайте, оновлюємо інформацію")
             counter = 1
             textMessage = ""
@@ -373,7 +366,7 @@ def telegram_bot():
                 counter += 1
             bot.send_message(message.chat.id, textMessage, parse_mode="Markdown")
         elif message.text == "Реквізити":
-            localsheets = sheetRequisites.get_all_records()
+            localsheets = sh.worksheet("Requisites").get_all_records()
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
             for localsheet in localsheets:
                 markup.add(types.KeyboardButton(localsheet.get("Назва")))
